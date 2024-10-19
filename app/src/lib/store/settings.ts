@@ -1,3 +1,4 @@
+import { DEFAULT_URL } from '$lib/config/env';
 import { getSources, type Source } from '$lib/repositories/sources';
 import { get, readonly, writable } from 'svelte/store';
 
@@ -23,7 +24,10 @@ export const categoryIdx = writable(0);
 const wordSourcesStore = writable<Source[]>([]);
 export const wordSources = readonly(wordSourcesStore);
 
-const initialWordSourceURLs: string[] = JSON.parse(localStorage.getItem('wordSourceURLs') ?? '[]');
+const storageWordSourceURLs = localStorage.getItem('wordSourceURLs');
+const initialWordSourceURLs = storageWordSourceURLs
+	? (JSON.parse(storageWordSourceURLs) as string[])
+	: [DEFAULT_URL];
 export const wordSourceURLs = writable(initialWordSourceURLs);
 wordSourceURLs.subscribe(async (value) => {
 	localStorage.setItem('wordSourceURLs', JSON.stringify(value));
