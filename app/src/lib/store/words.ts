@@ -40,8 +40,17 @@ function getAllPlayersCards(
 const wordsStore = writable<string[]>([]);
 export const words = readonly(wordsStore);
 
-export function initGame(sourceWords: string[], wolfCount: number, participantCount: number) {
+const categoryNameStore = writable<string>('');
+export const categoryName = readonly(categoryNameStore);
+
+export function initGame(
+	sourceWords: string[],
+	wolfCount: number,
+	participantCount: number,
+	categoryName: string
+) {
 	const [wolfWord, villagerWord] = getTargetWords(sourceWords);
 	const cards = getAllPlayersCards(wolfWord, villagerWord, wolfCount, participantCount);
 	wordsStore.set(cards);
+	categoryNameStore.set(categoryName);
 }

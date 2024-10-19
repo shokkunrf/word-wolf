@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { words } from '$lib/store/words';
+	import { categoryName, words } from '$lib/store/words';
 
 	let isDisplayed = false;
 	function displayResult() {
@@ -19,13 +19,16 @@
 		{#if !isDisplayed}
 			議論開始！
 		{:else}
-			<ul>
-				{#each $words as genre, i}
-					<li>
-						{i + 1}人目: {genre}
-					</li>
-				{/each}
-			</ul>
+			<div>
+				カテゴリ: {$categoryName}
+				<ul>
+					{#each $words as genre, i}
+						<li>
+							{i + 1}人目: {genre}
+						</li>
+					{/each}
+				</ul>
+			</div>
 		{/if}
 	</div>
 
