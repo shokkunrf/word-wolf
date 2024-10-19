@@ -5,6 +5,9 @@ function getRandomIndex(ary: ArrayLike<any>): number {
 }
 
 function getTargetWords(sourceWords: string[]): [string, string] {
+	if (sourceWords.length < 2) {
+		throw new Error('sourceWords must have at least 2 words');
+	}
 	const word1 = sourceWords[getRandomIndex(sourceWords)];
 	const filteredWords = sourceWords.filter((word) => word !== word1);
 	const word2 = filteredWords[getRandomIndex(filteredWords)];
