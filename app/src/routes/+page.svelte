@@ -39,10 +39,10 @@
 			return;
 		}
 
-		const selectedWords =
-			$categoryIdx === 0
-				? categories.flatMap((category) => category.words)
-				: categories.find((_, i) => i === $categoryIdx - 1)?.words ?? [];
+		const selectedIdx =
+			$categoryIdx === 0 ? Math.floor(Math.random() * categories.length) : $categoryIdx - 1;
+
+		const selectedWords = categories.find((_, i) => i === selectedIdx)?.words ?? [];
 		if (selectedWords.length < 2) {
 			alert('カテゴリが選択できませんでした');
 			return;
