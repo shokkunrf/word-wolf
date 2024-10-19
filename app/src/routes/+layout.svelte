@@ -1,3 +1,20 @@
+<script lang="ts">
+	import lzString from 'lz-string';
+	import { page } from '$app/stores';
+	import { share, wordSourceURLs } from '$lib/store/settings';
+
+	const param = $page.url.searchParams.get('share');
+	if (param) {
+		const urls = JSON.parse(lzString.decompressFromEncodedURIComponent(param)) as string[];
+		wordSourceURLs.set(urls);
+	}
+
+	function copyLink() {
+		navigator.clipboard.writeText(`${$page.url.origin}?share=${$share}`);
+		alert('リンクをコピーしました');
+	}
+</script>
+
 <div class="app">
 	<header>
 		<h1>Word Wolf</h1>
@@ -8,7 +25,7 @@
 	</main>
 
 	<footer>
-		<p>ここまで</p>
+		<button on:click={copyLink}>ゲームをシェア</button>
 	</footer>
 </div>
 
@@ -40,10 +57,6 @@
 		justify-content: center;
 		align-items: center;
 		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
 	}
 
 	@media (min-width: 480px) {

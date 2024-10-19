@@ -1,6 +1,7 @@
 import { DEFAULT_URL } from '$lib/config/env';
 import { getSources, type Source } from '$lib/repositories/sources';
-import { get, readonly, writable } from 'svelte/store';
+import lzString from 'lz-string';
+import { derived, get, readonly, writable } from 'svelte/store';
 
 const initialWolfCount = Number(localStorage.getItem('wolfCount') ?? 1);
 export const wolfCount = writable(initialWolfCount);
@@ -34,4 +35,8 @@ wordSourceURLs.subscribe(async (value) => {
 
 	const sources = await getSources(value);
 	wordSourcesStore.set(sources);
+});
+
+export const share = derived([wordSourceURLs], ([$wordSourceURLs]) => {
+	return lzString.compressToEncodedURIComponent(JSON.stringify($wordSourceURLs));
 });
