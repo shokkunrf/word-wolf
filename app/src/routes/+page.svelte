@@ -13,7 +13,7 @@
 		return $wordSources.flatMap((s) => {
 			return s.categories.map((c) => {
 				return {
-					name: s.name + '-' + c.name,
+					name: c.name,
 					words: c.words
 				};
 			});
