@@ -48,7 +48,7 @@
 			return;
 		}
 
-		initGame(selectedWords, $wolfCount, $participantCount, categoryNames[selectedIdx]);
+		initGame(selectedWords, $wolfCount, $participantCount, categoryNames[selectedIdx + 1]);
 		goto('/game');
 	}
 </script>
