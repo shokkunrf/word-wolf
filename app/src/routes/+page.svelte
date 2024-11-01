@@ -22,7 +22,7 @@
 	$: categoryNames = (() => {
 		categoryIdx.set(0);
 		const a = categories.map((c) => c.name);
-		a.unshift('全部');
+		a.unshift('ランダム');
 		return a;
 	})();
 
