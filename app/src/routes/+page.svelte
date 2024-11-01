@@ -99,7 +99,7 @@
 	</div>
 </div>
 
-<style>
+<style lang="scss" scoped>
 	.setting {
 		font-size: 2rem;
 		display: flex;
@@ -107,47 +107,49 @@
 	}
 	.properties {
 		height: 50vh;
+		.property {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: end;
+			margin-top: 0.5rem;
+			margin-bottom: 0.5rem;
+			> span {
+				width: 5em;
+			}
+			> .value {
+				display: inline-block;
+				> input {
+					background-color: #333;
+					border-width: 0;
+					color: #bbb;
+					font-size: 2.5rem;
+					width: 1.5em;
+				}
+				> select {
+					background-color: #333;
+					border-width: 0;
+					color: #bbb;
+					font-size: 2rem;
+					width: 5em;
+				}
+			}
+		}
 	}
-	.property {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: end;
-		margin-top: 0.5rem;
-		margin-bottom: 0.5rem;
-	}
-	.property > span {
-		width: 5em;
-	}
-	.property > .value {
-		display: inline-block;
-	}
-	.property > .value > input {
-		background-color: #333;
-		border-width: 0;
-		color: #bbb;
-		font-size: 2.5rem;
-		width: 1.5em;
-	}
-	.property > .value > select {
-		background-color: #333;
-		border-width: 0;
-		color: #bbb;
-		font-size: 2rem;
-		width: 5em;
-	}
+
 	.button {
 		display: flex;
 		justify-content: center;
+		> button {
+			background-color: #05a;
+			border-radius: 0.5rem;
+			border-width: 0;
+			color: azure;
+			font-size: 1.5rem;
+			margin: 1rem 0px;
+			padding: 0.5rem 1rem;
+		}
 	}
-	.button > button {
-		background-color: #05a;
-		border-radius: 0.5rem;
-		border-width: 0;
-		color: azure;
-		font-size: 1.5rem;
-		margin: 1rem 0px;
-		padding: 0.5rem 1rem;
-	}
+
 	.icon-button {
 		background-color: #333;
 		border-radius: 0.5rem;

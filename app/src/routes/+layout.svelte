@@ -29,7 +29,7 @@
 	</footer>
 </div>
 
-<style>
+<style lang="scss" scoped>
 	.app {
 		display: flex;
 		flex-direction: column;

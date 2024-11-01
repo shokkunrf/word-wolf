@@ -10,7 +10,7 @@
 
 <button on:click={init}>はじめから</button>
 
-<style>
+<style lang="scss" scoped>
 	button {
 		background-color: #a50;
 		border-radius: 0.5rem;

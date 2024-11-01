@@ -43,7 +43,7 @@
 	</div>
 </div>
 
-<style>
+<style lang="scss" scoped>
 	.game {
 		font-size: 2rem;
 		text-align: center;
