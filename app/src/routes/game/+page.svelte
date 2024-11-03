@@ -9,10 +9,11 @@
 	function next() {
 		if (confirm('OKを押したら次の人にまわしてね')) {
 			isDisplayed = false;
-			num++;
-			if (num >= $words.length) {
+			if (num + 1 >= $words.length) {
 				goto('/result');
+				return;
 			}
+			num++;
 		}
 	}
 
