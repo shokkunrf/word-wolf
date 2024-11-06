@@ -3,10 +3,14 @@
 	import { page } from '$app/stores';
 	import { share, wordSourceURLs } from '$lib/store/settings';
 
-	const param = $page.url.searchParams.get('share');
-	if (param) {
-		const urls = JSON.parse(lzString.decompressFromEncodedURIComponent(param)) as string[];
-		wordSourceURLs.set(urls);
+	import { building } from '$app/environment';
+
+	if (!building) {
+		const param = $page.url.searchParams.get('share');
+		if (param) {
+			const urls = JSON.parse(lzString.decompressFromEncodedURIComponent(param)) as string[];
+			wordSourceURLs.set(urls);
+		}
 	}
 
 	function copyLink() {
