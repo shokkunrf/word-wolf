@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { location } from '$lib/store/location';
 	import { categoryName, words } from '$lib/store/words';
 
 	let isDisplayed = false;
@@ -10,7 +10,7 @@
 	}
 
 	function next() {
-		goto('/');
+		location.set('setting');
 	}
 
 	let timer = 0;

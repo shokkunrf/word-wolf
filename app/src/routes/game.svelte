@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import RestartButton from '$lib/components/restartButton.svelte';
+	import { location } from '$lib/store/location';
 	import { words } from '$lib/store/words';
 
 	let num = 0;
@@ -10,7 +10,7 @@
 		if (confirm('OKを押したら次の人にまわしてね')) {
 			isDisplayed = false;
 			if (num + 1 >= $words.length) {
-				goto('/result');
+				location.set('result');
 				return;
 			}
 			num++;
