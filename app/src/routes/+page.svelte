@@ -1,13 +1,8 @@
 <script lang="ts">
-	import { setContext } from 'svelte';
-	import { writable } from 'svelte/store';
 	import { location } from '$lib/store/location';
 	import Setting from './setting.svelte';
 	import Game from './game.svelte';
 	import Result from './result.svelte';
-
-	const words = writable<string[]>();
-	setContext('words', words);
 </script>
 
 <div class="page">

@@ -1,44 +1,20 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
 	import { getCategories } from '$lib/repositories/genres';
 	import { location } from '$lib/store/location';
+	import { categoryIdx, participantCount, wolfCount } from '$lib/store/settings';
+	import { initGame } from '$lib/store/words';
 
-	let wolfCount = 1;
-	let participantCount = 4;
 	const categories = getCategories();
 	const categoryNames = categories.map((c) => c.name);
 	categoryNames.unshift('全部');
-	let selectedCategory: string;
-
-	const words = getContext<Writable<string[]>>('words');
-
-	function getRandomIndex(ary: ArrayLike<any>): number {
-		return Math.floor(Math.random() * ary.length);
-	}
-
-	function getRandomGenre(genres: string[]) {
-		return genres[getRandomIndex(genres)];
-	}
 
 	function submit() {
 		const selectedGenres =
-			selectedCategory === '全部'
+			$categoryIdx === 0
 				? categories.flatMap((category) => category.genres)
-				: categories.find((category) => category.name === selectedCategory)!.genres;
-		const wolfWord = getRandomGenre(selectedGenres);
-		const villagerWord = getRandomGenre(selectedGenres.filter((genre) => genre !== wolfWord));
+				: categories.find((_, i) => i === $categoryIdx - 1)!.genres;
 
-		let pool = Array(participantCount).fill(villagerWord);
-		for (let i = 0; i < wolfCount; i++) {
-			const idx = getRandomIndex(pool);
-			pool = pool.with(idx, wolfWord);
-			if (i === pool.filter((p) => p === wolfWord).length) {
-				i--;
-			}
-		}
-
-		words.set(pool);
+		initGame(selectedGenres, $wolfCount, $participantCount);
 		location.set('game');
 	}
 </script>
@@ -49,17 +25,17 @@
 			<div class="property">
 				<span>人狼:</span>
 				<div class="value">
-					<input bind:value={wolfCount} type="number" />
+					<input bind:value={$wolfCount} type="number" min="1" max={$participantCount - 1} />
 					/
-					<input bind:value={participantCount} type="number" />
+					<input bind:value={$participantCount} type="number" min="2" />
 				</div>
 			</div>
 			<div class="property">
 				<span>カテゴリ:</span>
 				<div class="value">
-					<select bind:value={selectedCategory}>
-						{#each categoryNames as categoryName}
-							<option value={categoryName}>{categoryName}</option>
+					<select bind:value={$categoryIdx}>
+						{#each categoryNames as categoryName, i}
+							<option value={i}>{categoryName}</option>
 						{/each}
 					</select>
 				</div>
