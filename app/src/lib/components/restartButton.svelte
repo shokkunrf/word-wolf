@@ -1,9 +1,6 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
-	import type { Location } from '$lib/store/location';
+	import { location } from '$lib/store/location';
 
-	const location = getContext<Writable<Location>>('location');
 	function init() {
 		if (confirm('設定画面からやり直しますか？')) {
 			location.set('setting');

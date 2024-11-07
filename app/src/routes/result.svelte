@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
-	import type { Location } from '$lib/store/location';
+	import { location } from '$lib/store/location';
 
 	const words = getContext<Writable<string>>('words');
-	const location = getContext<Writable<Location>>('location');
 
 	let isDisplayed = false;
 	function displayResult() {

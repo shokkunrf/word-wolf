@@ -2,11 +2,10 @@
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import RestartButton from '$lib/components/restartButton.svelte';
-	import type { Location } from '$lib/store/location';
+	import { location } from '$lib/store/location';
 
 	let num = 0;
 	const words = getContext<Writable<string[]>>('words');
-	const location = getContext<Writable<Location>>('location');
 
 	let isDisplayed = false;
 	function next() {

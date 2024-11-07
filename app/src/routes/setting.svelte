@@ -2,7 +2,7 @@
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import { getCategories } from '$lib/repositories/genres';
-	import type { Location } from '$lib/store/location';
+	import { location } from '$lib/store/location';
 
 	let wolfCount = 1;
 	let participantCount = 4;
@@ -12,7 +12,6 @@
 	let selectedCategory: string;
 
 	const words = getContext<Writable<string[]>>('words');
-	const location = getContext<Writable<Location>>('location');
 
 	function getRandomIndex(ary: ArrayLike<any>): number {
 		return Math.floor(Math.random() * ary.length);
