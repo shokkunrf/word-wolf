@@ -14,7 +14,7 @@
 				? categories.flatMap((category) => category.genres)
 				: categories.find((_, i) => i === $categoryIdx - 1)!.genres;
 
-		initGame(selectedGenres, $wolfCount, $participantCount);
+		initGame(selectedGenres, $wolfCount, $participantCount, categoryNames[$categoryIdx]);
 		location.set('game');
 	}
 </script>
