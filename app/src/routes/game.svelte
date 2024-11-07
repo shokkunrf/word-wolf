@@ -43,7 +43,7 @@
 	</div>
 </div>
 
-<style>
+<style lang="scss" scoped>
 	.game {
 		font-size: 2rem;
 		text-align: center;
@@ -51,14 +51,16 @@
 	.contents {
 		height: 50vh;
 	}
-	.button > button {
-		background-color: #05a;
-		border: 0 solid #000;
-		border-radius: 0.5rem;
-		border-width: 0;
-		color: azure;
-		font-size: 1.5rem;
-		margin: 1rem auto;
-		padding: 0.5rem 1rem;
+	.button {
+		> button {
+			background-color: #05a;
+			border: 0 solid #000;
+			border-radius: 0.5rem;
+			border-width: 0;
+			color: azure;
+			font-size: 1.5rem;
+			margin: 1rem auto;
+			padding: 0.5rem 1rem;
+		}
 	}
 </style>
