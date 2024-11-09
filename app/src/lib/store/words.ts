@@ -20,6 +20,9 @@ function getAllPlayersCards(
 	wolfCount: number,
 	participantCount: number
 ): string[] {
+	if (wolfCount >= participantCount) {
+		throw new Error('wolfCount must be less than participantCount');
+	}
 	const pool = Array<string>(participantCount).fill(villagerWord);
 	let i = 0;
 	while (i < wolfCount) {
