@@ -1,19 +1,55 @@
 <script lang="ts">
-	import { getCategories } from '$lib/repositories/genres';
 	import { location } from '$lib/store/location';
-	import { categoryIdx, participantCount, wolfCount } from '$lib/store/settings';
+	import {
+		categoryIdx,
+		participantCount,
+		wolfCount,
+		wordSources,
+		wordSourceURLs
+	} from '$lib/store/settings';
 	import { initGame } from '$lib/store/words';
 
-	const categories = getCategories();
-	const categoryNames = categories.map((c) => c.name);
-	categoryNames.unshift('ランダム');
+	$: categories = (() => {
+		return $wordSources.flatMap((s) => {
+			return s.categories.map((c) => {
+				return {
+					name: c.name,
+					words: c.words
+				};
+			});
+		});
+	})();
+
+	$: categoryNames = (() => {
+		categoryIdx.set(0);
+		const a = categories.map((c) => c.name);
+		a.unshift('ランダム');
+		return a;
+	})();
+
+	let urls = [...$wordSourceURLs];
+	// ボタンを押さないと取得しないのはURL入力中に取得するのを防ぐため
+	function fetchWordSources() {
+		urls = urls.filter((url) => url !== '');
+		wordSourceURLs.set(urls);
+	}
 
 	function submit() {
+		if (categories.length === 0) {
+			alert('カテゴリを取得できませんでした');
+			return;
+		}
+
 		const selectedIdx =
 			$categoryIdx === 0 ? Math.floor(Math.random() * categories.length) : $categoryIdx - 1;
-		const selectedGenres = categories.find((_, i) => i === selectedIdx)?.genres ?? [];
 
-		initGame(selectedGenres, $wolfCount, $participantCount, categoryNames[selectedIdx + 1]);
+		const selectedWords = categories.find((_, i) => i === selectedIdx)?.words ?? [];
+		if (selectedWords.length < 2) {
+			alert('カテゴリが選択できませんでした');
+			return;
+		}
+
+		initGame(selectedWords, $wolfCount, $participantCount, categoryNames[selectedIdx + 1]);
 		location.set('game');
 	}
 </script>
@@ -38,6 +74,22 @@
 						{/each}
 					</select>
 				</div>
+			</div>
+
+			<div class="property">
+				<details>
+					<ul>
+						{#each urls as _, i}
+							<li>
+								<input type="text" bind:value={urls[i]} />
+							</li>
+						{/each}
+					</ul>
+					<!-- 入力ボックスを追加する -->
+					<button on:click={() => (urls = [...urls, ''])} class="icon-button">+</button>
+					<!-- 取得ボタン -->
+					<button on:click={fetchWordSources} class="icon-button">⟳</button>
+				</details>
 			</div>
 		</div>
 
@@ -95,5 +147,16 @@
 			margin: 1rem 0px;
 			padding: 0.5rem 1rem;
 		}
+	}
+
+	.icon-button {
+		background-color: #333;
+		border-radius: 0.5rem;
+		border: 1px solid transparent;
+		color: #bbb;
+		font-size: large;
+		cursor: pointer;
+		width: 2rem;
+		height: 2rem;
 	}
 </style>
