@@ -6,15 +6,14 @@
 
 	const categories = getCategories();
 	const categoryNames = categories.map((c) => c.name);
-	categoryNames.unshift('全部');
+	categoryNames.unshift('ランダム');
 
 	function submit() {
-		const selectedGenres =
-			$categoryIdx === 0
-				? categories.flatMap((category) => category.genres)
-				: categories.find((_, i) => i === $categoryIdx - 1)!.genres;
+		const selectedIdx =
+			$categoryIdx === 0 ? Math.floor(Math.random() * categories.length) : $categoryIdx - 1;
+		const selectedGenres = categories.find((_, i) => i === selectedIdx)?.genres ?? [];
 
-		initGame(selectedGenres, $wolfCount, $participantCount, categoryNames[$categoryIdx]);
+		initGame(selectedGenres, $wolfCount, $participantCount, categoryNames[selectedIdx + 1]);
 		location.set('game');
 	}
 </script>
