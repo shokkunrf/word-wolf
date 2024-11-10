@@ -64,7 +64,7 @@
 		font-size: 2rem;
 	}
 	.contents {
-		height: 50vh;
+		min-height: 50vh;
 		.categoryName {
 			font-size: 0.5em;
 			background-color: #333;
