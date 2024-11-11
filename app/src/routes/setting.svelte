@@ -49,7 +49,12 @@
 			return;
 		}
 
-		initGame(selectedWords, $wolfCount, $participantCount, categoryNames[selectedIdx + 1]);
+		initGame(
+			selectedWords,
+			Number($wolfCount),
+			Number($participantCount),
+			categoryNames[selectedIdx + 1]
+		);
 		location.set('game');
 	}
 </script>
@@ -60,7 +65,7 @@
 			<div class="property">
 				<span>人狼:</span>
 				<div class="value">
-					<input bind:value={$wolfCount} type="number" min="1" max={$participantCount - 1} />
+					<input bind:value={$wolfCount} type="number" min="1" />
 					/
 					<input bind:value={$participantCount} type="number" min="2" />
 				</div>
