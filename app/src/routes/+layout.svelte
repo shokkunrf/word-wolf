@@ -1,6 +1,3 @@
-<script lang="ts">
-</script>
-
 <div class="app">
 	<header>
 		<h1>Word Wolf</h1>
