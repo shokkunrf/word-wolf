@@ -1,7 +1,6 @@
-import * as lzString from 'lz-string';
-import { DEFAULT_URL } from '$lib/config/env';
+import { DEFAULT_WORD_SOURCE_URL } from '$lib/config/env';
 import { getSources, type Source } from '$lib/repositories/sources';
-import { derived, get, readonly, writable } from 'svelte/store';
+import { get, readonly, writable } from 'svelte/store';
 
 const initialWolfCount = Number(localStorage.getItem('wolfCount') ?? 1);
 export const wolfCount = writable<number | null>(initialWolfCount);
@@ -40,18 +39,17 @@ export const categoryIdx = writable(0);
 const wordSourcesStore = writable<Source[]>([]);
 export const wordSources = readonly(wordSourcesStore);
 
-const storageWordSourceURLs = localStorage.getItem('wordSourceURLs');
-const initialWordSourceURLs = storageWordSourceURLs
-	? (JSON.parse(storageWordSourceURLs) as string[])
-	: [DEFAULT_URL];
-export const wordSourceURLs = writable(initialWordSourceURLs);
-wordSourceURLs.subscribe(async (value) => {
-	const sources = await getSources(value);
+export const useUserDataSource = !DEFAULT_WORD_SOURCE_URL;
+
+const initialWordSourceURL =
+	DEFAULT_WORD_SOURCE_URL ?? localStorage.getItem('myWordSourceURL') ?? '';
+export const wordSourceURL = writable(initialWordSourceURL);
+wordSourceURL.subscribe(async (value) => {
+	if (value === '') {
+		return;
+	}
+	const sources = await getSources([value]);
 	wordSourcesStore.set(sources);
 
-	localStorage.setItem('wordSourceURLs', JSON.stringify(value));
-});
-
-export const share = derived([wordSourceURLs], ([$wordSourceURLs]) => {
-	return lzString.compressToEncodedURIComponent(JSON.stringify($wordSourceURLs));
+	localStorage.setItem('myWordSourceURL', value);
 });

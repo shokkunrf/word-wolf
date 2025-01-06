@@ -3,9 +3,10 @@
 	import {
 		categoryIdx,
 		participantCount,
+		useUserDataSource,
 		wolfCount,
 		wordSources,
-		wordSourceURLs
+		wordSourceURL
 	} from '$lib/store/settings';
 	import { initGame } from '$lib/store/words';
 
@@ -27,11 +28,10 @@
 		return a;
 	})();
 
-	let urls = [...$wordSourceURLs];
+	let url = $wordSourceURL;
 	// ボタンを押さないと取得しないのはURL入力中に取得するのを防ぐため
-	function fetchWordSources() {
-		urls = urls.filter((url) => url !== '');
-		wordSourceURLs.set(urls);
+	function fetchWordSource() {
+		wordSourceURL.set(url);
 	}
 
 	function submit() {
@@ -81,21 +81,12 @@
 				</div>
 			</div>
 
-			<div class="property">
-				<details>
-					<ul>
-						{#each urls as _, i}
-							<li>
-								<input type="text" bind:value={urls[i]} />
-							</li>
-						{/each}
-					</ul>
-					<!-- 入力ボックスを追加する -->
-					<button on:click={() => (urls = [...urls, ''])} class="icon-button">+</button>
-					<!-- 取得ボタン -->
-					<button on:click={fetchWordSources} class="icon-button">⟳</button>
-				</details>
-			</div>
+			{#if useUserDataSource}
+				<div class="property">
+					<input type="text" bind:value={url} />
+					<button on:click={fetchWordSource} class="icon-button">▶️</button>
+				</div>
+			{/if}
 		</div>
 
 		<div class="button">
