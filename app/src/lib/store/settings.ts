@@ -1,5 +1,5 @@
 import { DEFAULT_WORD_SOURCE_URL } from '$lib/config/env';
-import { getSources, type Source } from '$lib/repositories/sources';
+import { getWordSource, type WordSource } from '$lib/repositories/wordSource';
 import { get, readonly, writable } from 'svelte/store';
 
 const initialWolfCount = Number(localStorage.getItem('wolfCount') ?? 1);
@@ -35,9 +35,9 @@ participantCount.subscribe((value) => {
 
 export const categoryIdx = writable(0);
 
-// wordSourcesがwordSourceURLsのderived()でないのは、getSources()が非同期のため
-const wordSourcesStore = writable<Source[]>([]);
-export const wordSources = readonly(wordSourcesStore);
+// wordSourceがwordSourceURLのderived()でないのは、getWordSource()が非同期のため
+const wordSourceStore = writable<WordSource | null>(null);
+export const wordSource = readonly(wordSourceStore);
 
 export const useUserDataSource = !DEFAULT_WORD_SOURCE_URL;
 
@@ -48,8 +48,8 @@ wordSourceURL.subscribe(async (value) => {
 	if (value === '') {
 		return;
 	}
-	const sources = await getSources([value]);
-	wordSourcesStore.set(sources);
+	const source = await getWordSource(value);
+	wordSourceStore.set(source);
 
 	localStorage.setItem('myWordSourceURL', value);
 });

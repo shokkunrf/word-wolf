@@ -5,25 +5,14 @@
 		participantCount,
 		useUserDataSource,
 		wolfCount,
-		wordSources,
+		wordSource,
 		wordSourceURL
 	} from '$lib/store/settings';
 	import { initGame } from '$lib/store/words';
 
-	$: categories = (() => {
-		return $wordSources.flatMap((s) => {
-			return s.categories.map((c) => {
-				return {
-					name: c.name,
-					words: c.words
-				};
-			});
-		});
-	})();
-
 	$: categoryNames = (() => {
 		categoryIdx.set(0);
-		const a = categories.map((c) => c.name);
+		const a = $wordSource?.categories.map((c) => c.name) ?? [];
 		a.unshift('ランダム');
 		return a;
 	})();
@@ -35,15 +24,17 @@
 	}
 
 	function submit() {
-		if (categories.length === 0) {
+		if (!($wordSource && $wordSource.categories.length !== 0)) {
 			alert('カテゴリを取得できませんでした');
 			return;
 		}
 
 		const selectedIdx =
-			$categoryIdx === 0 ? Math.floor(Math.random() * categories.length) : $categoryIdx - 1;
+			$categoryIdx === 0
+				? Math.floor(Math.random() * $wordSource.categories.length)
+				: $categoryIdx - 1;
 
-		const selectedWords = categories.find((_, i) => i === selectedIdx)?.words ?? [];
+		const selectedWords = $wordSource.categories.find((_, i) => i === selectedIdx)?.words ?? [];
 		if (selectedWords.length < 2) {
 			alert('カテゴリが選択できませんでした');
 			return;

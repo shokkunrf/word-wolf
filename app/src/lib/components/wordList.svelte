@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { wordSources } from '$lib/store/settings';
-
-	$: categories = $wordSources.flatMap((s) => s.categories);
+	import { wordSource } from '$lib/store/settings';
 </script>
 
 <div class="word-list">
@@ -9,16 +7,18 @@
 		<h2>Word List</h2>
 
 		<div>
-			{#each categories as category, _}
-				<details>
-					<summary>{category.name}</summary>
-					<ul>
-						{#each category.words as word, _}
-							<li>{word}</li>
-						{/each}
-					</ul>
-				</details>
-			{/each}
+			{#if $wordSource}
+				{#each $wordSource?.categories as category, _}
+					<details>
+						<summary>{category.name}</summary>
+						<ul>
+							{#each category.words as word, _}
+								<li>{word}</li>
+							{/each}
+						</ul>
+					</details>
+				{/each}
+			{/if}
 		</div>
 	</div>
 </div>
