@@ -1,40 +1,30 @@
 <script lang="ts">
+	import { type WordSource } from '$lib/repositories/wordSource';
 	import { location } from '$lib/store/location';
-	import {
-		categoryIdx,
-		participantCount,
-		useUserDataSource,
-		wolfCount,
-		wordSource,
-		wordSourceURL
-	} from '$lib/store/settings';
+	import { categoryIdx, participantCount, wolfCount } from '$lib/store/settings';
 	import { initGame } from '$lib/store/words';
+
+	export let wordSource: WordSource;
 
 	$: categoryNames = (() => {
 		categoryIdx.set(0);
-		const a = $wordSource?.categories.map((c) => c.name) ?? [];
+		const a = wordSource.categories.map((c) => c.name) ?? [];
 		a.unshift('ランダム');
 		return a;
 	})();
 
-	let url = $wordSourceURL;
-	// ボタンを押さないと取得しないのはURL入力中に取得するのを防ぐため
-	function fetchWordSource() {
-		wordSourceURL.set(url);
-	}
-
 	function submit() {
-		if (!($wordSource && $wordSource.categories.length !== 0)) {
+		if (wordSource.categories.length === 0) {
 			alert('カテゴリを取得できませんでした');
 			return;
 		}
 
 		const selectedIdx =
 			$categoryIdx === 0
-				? Math.floor(Math.random() * $wordSource.categories.length)
+				? Math.floor(Math.random() * wordSource.categories.length)
 				: $categoryIdx - 1;
 
-		const selectedWords = $wordSource.categories.find((_, i) => i === selectedIdx)?.words ?? [];
+		const selectedWords = wordSource.categories.find((_, i) => i === selectedIdx)?.words ?? [];
 		if (selectedWords.length < 2) {
 			alert('カテゴリが選択できませんでした');
 			return;
@@ -71,13 +61,6 @@
 					</select>
 				</div>
 			</div>
-
-			{#if useUserDataSource}
-				<div class="property">
-					<input type="text" bind:value={url} />
-					<button on:click={fetchWordSource} class="icon-button">▶️</button>
-				</div>
-			{/if}
 		</div>
 
 		<div class="button">

@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { wordSource } from '$lib/store/settings';
+	import { type WordSource } from '$lib/repositories/wordSource';
+
+	export let wordSource: WordSource;
 </script>
 
 <div class="word-list">
@@ -7,18 +9,16 @@
 		<h2>Word List</h2>
 
 		<div>
-			{#if $wordSource}
-				{#each $wordSource?.categories as category, _}
-					<details>
-						<summary>{category.name}</summary>
-						<ul>
-							{#each category.words as word, _}
-								<li>{word}</li>
-							{/each}
-						</ul>
-					</details>
-				{/each}
-			{/if}
+			{#each wordSource?.categories as category, _}
+				<details>
+					<summary>{category.name}</summary>
+					<ul>
+						{#each category.words as word, _}
+							<li>{word}</li>
+						{/each}
+					</ul>
+				</details>
+			{/each}
 		</div>
 	</div>
 </div>
