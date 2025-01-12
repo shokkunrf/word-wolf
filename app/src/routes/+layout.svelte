@@ -1,6 +1,12 @@
+<script lang="ts">
+	import { base } from '$app/paths';
+</script>
+
 <div class="app">
 	<header>
-		<h1>Word Wolf</h1>
+		<a href={base}>
+			<h1>Word Wolf</h1>
+		</a>
 	</header>
 
 	<main>
@@ -30,6 +36,10 @@
 
 	header {
 		margin: 0 auto;
+		a {
+			text-decoration: none;
+			color: #ddd;
+		}
 	}
 
 	footer {

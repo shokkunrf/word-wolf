@@ -118,15 +118,4 @@
 			padding: 0.5rem 1rem;
 		}
 	}
-
-	.icon-button {
-		background-color: #333;
-		border-radius: 0.5rem;
-		border: 1px solid transparent;
-		color: #bbb;
-		font-size: large;
-		cursor: pointer;
-		width: 2rem;
-		height: 2rem;
-	}
 </style>

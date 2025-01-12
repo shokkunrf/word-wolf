@@ -6,9 +6,9 @@
 	import WordList from '$lib/components/wordList.svelte';
 	import { getWordSource, type WordSource } from '$lib/repositories/wordSource';
 
-	export let data: WordSource | {};
+	export let data;
 
-	let wordSource = Object.keys(data).length !== 0 ? (data as WordSource) : null;
+	let { wordSource } = data;
 	let myWordSourceURL = '';
 
 	async function fetchWordSource() {

@@ -1,9 +1,15 @@
-import { DEFAULT_WORD_SOURCE_URL } from '$lib/config/env';
 import { getWordSource } from '$lib/repositories/wordSource';
 
-export async function load() {
-	if (!DEFAULT_WORD_SOURCE_URL) {
-		return null;
+export async function load({ params, parent }) {
+	const { urls } = await parent();
+	const url = urls.get(params.wordSource);
+
+	if (url) {
+		return {
+			wordSource: await getWordSource(url)
+		};
 	}
-	return await getWordSource(DEFAULT_WORD_SOURCE_URL);
+	return {
+		wordSource: null
+	};
 }
