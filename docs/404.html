@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="/word-wolf/favicon.png" />
+		<meta name="viewport" content="width=device-width" />
+		<style>
+			body {
+				background-color: #222;
+				color: #ddd;
+				margin: 0;
+			}
+			body a {
+				color: darkcyan;
+			}
+		</style>
+		
+		<link rel="modulepreload" href="/word-wolf/_app/immutable/entry/start.21ea7abb.js">
+		<link rel="modulepreload" href="/word-wolf/_app/immutable/chunks/scheduler.b674b2bd.js">
+		<link rel="modulepreload" href="/word-wolf/_app/immutable/chunks/singletons.8be0c3ff.js">
+		<link rel="modulepreload" href="/word-wolf/_app/immutable/chunks/index.86a803e7.js">
+		<link rel="modulepreload" href="/word-wolf/_app/immutable/chunks/paths.e62792fa.js">
+		<link rel="modulepreload" href="/word-wolf/_app/immutable/entry/app.b6e94f2f.js">
+		<link rel="modulepreload" href="/word-wolf/_app/immutable/chunks/index.145bf3a3.js">
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">
+			<script>
+				{
+					__sveltekit_4n6f8w = {
+						assets: "/word-wolf",
+						base: "/word-wolf",
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("/word-wolf/_app/immutable/entry/start.21ea7abb.js"),
+						import("/word-wolf/_app/immutable/entry/app.b6e94f2f.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element);
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
